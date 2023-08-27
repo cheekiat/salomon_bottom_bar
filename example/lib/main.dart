@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
             /// Home
             SalomonBottomBarItem(
               icon: Icon(Icons.home),
-              title: Text("Home"),
+              title: Text("Homexxxxcxczcd"),
               selectedColor: Colors.purple,
             ),
 
