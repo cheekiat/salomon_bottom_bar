@@ -56,14 +56,16 @@ class SalomonBottomBar extends StatelessWidget {
   /// The transition curve
   final Curve curve;
 
+  EdgeInsetsGeometry? padding;
+  EdgeInsetsGeometry? widgetMargin;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Container(
-      padding:
-      const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-      margin: EdgeInsets.symmetric(horizontal: 22),
+      padding: padding ?? EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+      margin: widgetMargin ?? EdgeInsets.symmetric(horizontal: 22),
       clipBehavior: Clip.antiAlias,
       decoration: ShapeDecoration(
         color: backgroundColor ?? Colors.transparent,
