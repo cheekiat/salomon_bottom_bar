@@ -18,6 +18,8 @@ class SalomonBottomBar extends StatelessWidget {
     this.itemPadding = const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
     this.duration = const Duration(milliseconds: 500),
     this.curve = Curves.easeOutQuint,
+    this.padding,
+    this.widgetMargin
   }) : super(key: key);
 
   /// A list of tabs to display, ie `Home`, `Likes`, etc
