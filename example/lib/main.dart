@@ -28,6 +28,7 @@ class _MyAppState extends State<MyApp> {
           title: Text(MyApp.title),
         ),
         bottomNavigationBar: SalomonBottomBar(
+          backgroundColor: Colors.deepPurple,
           currentIndex: _currentIndex,
           onTap: (i) => setState(() => _currentIndex = i),
           items: [

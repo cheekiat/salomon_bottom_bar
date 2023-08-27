@@ -60,34 +60,42 @@ class SalomonBottomBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return ColoredBox(
-      color: backgroundColor ?? Colors.transparent,
-      child: SafeArea(
-        minimum: margin,
-        child: Row(
-          /// Using a different alignment when there are 2 items or less
-          /// so it behaves the same as BottomNavigationBar.
-          mainAxisAlignment: items.length <= 2
-              ? MainAxisAlignment.spaceEvenly
-              : MainAxisAlignment.spaceBetween,
-          children: [
-            for (final item in items)
-              TweenAnimationBuilder<double>(
-                tween: Tween(
-                  end: items.indexOf(item) == currentIndex ? 1.0 : 0.0,
-                ),
-                curve: curve,
-                duration: duration,
-                builder: (context, t, _) {
-                  final _selectedColor = item.selectedColor ??
-                      selectedItemColor ??
-                      theme.primaryColor;
+    return Container(
+      padding:
+      const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
+      margin: EdgeInsets.symmetric(horizontal: 22),
+      clipBehavior: Clip.antiAlias,
+      decoration: ShapeDecoration(
+        color: backgroundColor ?? Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(90),
+        ),
+      ),
+      child: Row(
+        /// Using a different alignment when there are 2 items or less
+        /// so it behaves the same as BottomNavigationBar.
+        mainAxisAlignment: items.length <= 2
+            ? MainAxisAlignment.spaceEvenly
+            : MainAxisAlignment.spaceBetween,
+        children: [
+          for (final item in items)
+            TweenAnimationBuilder<double>(
+              tween: Tween(
+                end: items.indexOf(item) == currentIndex ? 1.0 : 0.0,
+              ),
+              curve: curve,
+              duration: duration,
+              builder: (context, t, _) {
+                final _selectedColor = item.selectedColor ??
+                    selectedItemColor ??
+                    theme.primaryColor;
 
-                  final _unselectedColor = item.unselectedColor ??
-                      unselectedItemColor ??
-                      theme.iconTheme.color;
+                final _unselectedColor = item.unselectedColor ??
+                    unselectedItemColor ??
+                    theme.iconTheme.color;
 
-                  return Material(
+                return Flexible(
+                  child: Material(
                     color: Color.lerp(
                         _selectedColor.withOpacity(0.0),
                         _selectedColor.withOpacity(selectedColorOpacity ?? 0.1),
@@ -117,49 +125,21 @@ class SalomonBottomBar extends StatelessWidget {
                                   ? item.activeIcon ?? item.icon
                                   : item.icon,
                             ),
-                            ClipRect(
-                              clipBehavior: Clip.antiAlias,
-                              child: SizedBox(
-                                /// TODO: Constrain item height without a fixed value
-                                ///
-                                /// The Align property appears to make these full height, would be
-                                /// best to find a way to make it respond only to padding.
-                                height: 20,
-                                child: Align(
-                                  alignment: Alignment(-0.2, 0.0),
-                                  widthFactor: t,
-                                  child: Padding(
-                                    padding: Directionality.of(context) ==
-                                            TextDirection.ltr
-                                        ? EdgeInsets.only(
-                                            left: itemPadding.left / 2,
-                                            right: itemPadding.right)
-                                        : EdgeInsets.only(
-                                            left: itemPadding.left,
-                                            right: itemPadding.right / 2),
-                                    child: DefaultTextStyle(
-                                      style: TextStyle(
-                                        color: Color.lerp(
-                                            _selectedColor.withOpacity(0.0),
-                                            _selectedColor,
-                                            t),
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      child: item.title,
-                                    ),
-                                  ),
-                                ),
+                            Flexible(
+                              child: ClipRect(
+                                clipBehavior: Clip.antiAlias,
+                                child: item.title,
                               ),
                             ),
                           ],
                         ),
                       ),
                     ),
-                  );
-                },
-              ),
-          ],
-        ),
+                  ),
+                );
+              },
+            ),
+        ],
       ),
     );
   }
